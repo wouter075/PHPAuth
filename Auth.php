@@ -302,7 +302,7 @@ class Auth
 	}
 
 	/***
-	* Logs out the session, identified by hash
+	* Logs out the session, identified by hash and removes the cookie.
 	* @param string $hash
 	* @return boolean
 	*/
@@ -312,6 +312,9 @@ class Auth
 		if (strlen($hash) != 40) {
 			return false;
 		}
+
+		unset($_COOKIE[$this->config->cookie_name]);
+		setcookie($this->config->cookie_name, null, -1, $this->config->cookie_path);
 
 		return $this->deleteSession($hash);
 	}
