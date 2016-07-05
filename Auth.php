@@ -41,7 +41,7 @@ class Auth
 	}
 
 	/***
-	* Logs a user in
+	* Logs a user in and sets a cookie
 	* @param string $email
 	* @param string $password
 	* @param int $remember
@@ -124,6 +124,9 @@ class Auth
 
 		$return['hash'] = $sessiondata['hash'];
 		$return['expire'] = $sessiondata['expiretime'];
+
+		setcookie($this->config->cookie_name, $sessiondata['hash'], $sessiondata['expiretime'], $this->config->cookie_path, $this->config->cookie_domain);
+
 
 		return $return;
 	}
